@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX</title>
+</head>
+<body>
+<h1 id="response"></h1>
+<script>
+/*
+AJAX
+- AJAX singkatan dari Asynchronous JavaScript and XML
+- AJAX biasanya digunakan untuk mengambil atau mengirim data ke URL lain
+- Untuk membuat AJAX, kita bisa menggunakan class XMLHttpRequest
+- https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
+*/
+
+    // const ajax = new XMLHttpRequest();
+    // ajax.open("GET", "api/hello.json");
+    // ajax.send();
+
+/*
+Menerima Data di AJAX
+- AJAX biasanya digunakan untuk mengirim data ke Server atau menerima data dari Server
+- Tiap request AJAX yang dilakukan, biasanya kita ingin mendapat informasi response dari Server
+- Kita tidak bisa langsung mengambil response AJAX, karena proses AJAX adalah Async,
+  sehingga kita perlu menunggu sampai proses Async selesai
+- Untuk mendapatkan informasi AJAX, kita bisa menggunakan AJAX Callback,
+  yang akan dieksekusi setelah proses AJAX selesai
+- Untuk menambahkan AJAX Callback, kita bisa tambahkan pada event load
+- https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/load_event
+- Untuk mengambil data dari server, kita bisa menggunakan property responseText
+*/
+
+    const ajax = new XMLHttpRequest();
+    ajax.open("GET", "api/hello.json");
+    ajax.addEventListener("load", function () {
+        const json = JSON.parse(ajax.responseText);
+
+        const header = document.getElementById("response");
+        header.textContent = json.response;
+    });
+    ajax.send();
+
+
+
+</script>
+</body>
+</html>
