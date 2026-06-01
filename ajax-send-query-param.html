@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax Send Query Param</title>
+</head>
+<body>
+<form>
+    <label for="search"> Search :
+        <input type="text" name="search" id="search">
+    </label>
+    <br>
+    <input type="button" id="searchButton" value="search">
+</form>
+<h1 id="response"></h1>
+<script>
+
+/*
+URL Search Param
+- Selain menggunakan format JSON, kadang data bisa dikirim menggunakan AJAX dalam bentuk query parameter
+- Daripada menambahkan query parameter secara manual ke URL,
+  cara yang lebih mudah adalah menggunakan object URLSearchParams
+- Object URLSearchParams bisa digunakan sebelum membuat URL
+- https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+*/
+
+    function doSearch() {
+        const ajax = new XMLHttpRequest();
+
+        const param = new URLSearchParams();
+        param.append("search", document.getElementById("searchButton").value);
+        param.append("filter", document.getElementById("searchButton").value);
+        
+        ajax.open("GET", `https://jsonplaceholder.typicode.com/posts?${param.toString()}`);
+        ajax.onload = function () {
+            const response = document.getElementById("response");
+            response.innerText = ajax.responseText;
+        }
+        ajax.send();
+
+    };
+
+    document.getElementById("searchButton").onclick = doSearch;
+
+/*
+yang tertulis di kode kamu saat ini sebenarnya adalah sebuah simulasi 
+bagaimana sebuah API (Server) menerima banyak parameter sekaligus.
+Secara singkat, kegunaan param.append("filter", ...) di kode kamu adalah 
+untuk mengirimkan parameter pencarian tambahan (kriteria kedua) ke server dalam satu kali request.
+
+Kamu bisa menambahkan 3, 5, bahkan 10 parameter sekaligus menggunakan param.append(). 
+Jumlah dan nama parameternya sepenuhnya bebas, tergantung pada kebutuhan database atau s
+erver (API) yang kamu gunakan.
+
+Berbeda dengan SEO (Search Engine Operation) -> bagaikan koki
+param  ->  Pelayan
+*/
+</script>
+</body>
+</html>

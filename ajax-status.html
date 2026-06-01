@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX With Status</title>
+</head>
+<body>
+<h1 id="response"></h1>
+<script>
+    
+    function displayResponse(json){
+        const header = document.getElementById("response");
+        header.textContent = json.response;
+    }
+
+    const ajax = new XMLHttpRequest();
+    ajax.onreadystatechange = function (){
+        console.info(`Ready State Change ${ajax.readyState} `);
+    }
+
+    ajax.open("GET", "api/salah.json"); 
+    ajax.addEventListener("load", function () {
+        if(ajax.status === 200) {
+            const json = JSON.parse(ajax.responseText);
+            displayResponse(json);
+        }else{
+            displayResponse({
+                response : `Terjadi Kesalahn dengan status ${ajax.status}`
+            })
+        }
+    });
+    ajax.send();
+
+/*
+Response Status
+- AJAX adalah proses komunikasi Client dan Server
+- Dalam komunikasi Client dan Server, kita tidak bisa selalu menganggap proses tersebut akan berjalan lancar
+- Ada banyak hal yang bisa mengganggu proses AJAX dan menyebabkan error,
+  seperti koneksi internet bermasalah, error dari server, data client tidak valid, dll
+- Server biasanya akan mengirimkan HTTP Status Code yang sesuai dengan jenis response,
+  seperti yang dibahas di materi HTTP
+- Untuk mengetahui status response dari Server, kita bisa menggunakan property status
+- https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/status
+*/
+
+</script>
+</body>
+</html>
