@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch API</title>
+</head>
+<body>
+<form>
+    <label for="username">Username :
+        <input type="text" name="username" id="username">
+    </label>
+    <br>
+    <label for="password">Password :
+        <input type="password" id="password" name="password">
+    </label>
+    <br>
+    <input type="button" id="login" value="Login">
+</form>
+<h1 id="response"></h1>
+<script>
+    function doLogin(){
+        const request = new Request("https://jsonplaceholder.typicode.com/posts", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                username: document.getElementById("username").value,
+                password: document.getElementById("password").value
+            })
+        });
+        // Promise<Response>
+        const response = fetch(request);
+
+        response
+            .then((response) => response.json())
+            .then(function(json){
+                document.getElementById("response").textContent = json.success
+            })
+            .catch(function (error){
+                document.getElementById("response").textContent = error;
+            })
+    }
+
+    document.getElementById("login").onclick = doLogin;
+
+/*
+Fetch API
+- Fetch API merupakan fitur baru sebagai alternatif AJAX
+- Saat menggunakan AJAX, kita perlu menggunakan Callback untuk menerima response atau data dari Server,
+  sedangkan Fetch API sudah menggunakan Promise, sehingga lebih mudah dibandingkan AJAX
+- Hampir semua browser modern sekarang sudah mendukung penggunaan Fetch API
+- Apa yang bisa dilakukan di AJAX, bisa juga dilakukan di Fetch API
+- https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+*/
+
+/*
+Request
+- Saat akan mengirim request menggunakan Fetch API, kita perlu membuat object Request
+- Hal ini lebih rapi dibandingkan menggunakan AJAX
+- Kita bisa membuat object Request, lalu dikirim menggunakan Fetch API
+- Saat membuat Request, kita bisa menentukan data yang ingin dikirim
+- https://developer.mozilla.org/en-US/docs/Web/API/Request/Request
+*/
+
+
+</script>
+</body>
+</html>
