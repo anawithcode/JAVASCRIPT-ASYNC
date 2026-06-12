@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise All</title>
+</head>
+<body>
+<script>
+
+    function getProduct(product) {
+        return new Promise(function (resolve, reject) {
+
+            const ajax = new XMLHttpRequest();
+            ajax.open("GET", `api/${product}.json`);
+            ajax.onload = function () {
+                if (ajax.status === 200) {
+                    resolve(ajax.responseText);
+                } else {
+                    reject(`Error Get Product with response : ${ajax.status}`);
+                }
+            };
+            ajax.send();
+        });
+    }
+
+    const promise = Promise.all([  //any/race kalo mau yang paling cepet
+    getProduct("product1"),
+    getProduct("product2"),
+    getProduct("product3")
+    ])
+
+    promise.then(function (product){
+        console.info(product);
+    })
+</script>
+</body>
+</html>
