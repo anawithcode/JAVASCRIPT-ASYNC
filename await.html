@@ -17,8 +17,61 @@
         return response.then((response) => response.json());
     }
 
-    getProduct()
-        .then((product) => console.info(product));
+    // Promise<String Product Name>
+    function getProductNamePromise() {
+        return new Promise(function (resolve, reject){
+            getProduct()
+                .then((product) => resolve(product.name))
+                .catch((error) => resolve("Product Not Found"));
+        })
+    }
+
+    async function getProductNameAsync(){
+        try {
+            const product = await getProduct();
+            return product.name;
+        } catch (e) {
+            return "Product Not Found";
+        } finally {
+            
+        }
+    }
+
+
+    getProductNamePromise()
+        .then((productName) => console.info(productName));
+    
+    getProductNameAsync()
+        .then((productName) => console.info(productName));
+
+/*
+Perbedaan async dan await
+
+1. async
+- async adalah keyword untuk mendefinisikan sebuah fungsi asynchronous.
+- Fungsi yang diberi async akan selalu mengembalikan Promise.
+- Di dalam fungsi async, kita bisa menggunakan await.
+- Contoh:
+  async function getData() {
+    return "Hello"; // otomatis dikembalikan sebagai Promise.resolve("Hello")
+  }
+
+2. await
+- await adalah keyword yang hanya bisa digunakan di dalam fungsi async.
+- await digunakan untuk menunggu hasil Promise sebelum melanjutkan eksekusi baris berikutnya.
+- Dengan await, kode asynchronous terlihat seperti synchronous.
+- Contoh:
+  async function run() {
+    const result = await getData();
+    console.log(result); // "Hello"
+  }
+
+Kesimpulan:
+- async = mendeklarasikan fungsi asynchronous (mengembalikan Promise).
+- await = menunggu hasil Promise di dalam fungsi async.
+- async tanpa await hanya menghasilkan Promise.
+- await tanpa async tidak bisa digunakan.
+*/
 
 </script>
 </body>

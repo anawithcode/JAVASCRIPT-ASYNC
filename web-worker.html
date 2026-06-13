@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Workers</title>
+</head>
+<body>
+<button id="buttonTask">Click Me</button>
+<script>
+
+    const worker = new Worker("worker.js");
+    worker.addEventListener("message", function (message) {
+        console.info(message.data)
+    });
+
+    document.getElementById("buttonTask").onclick = function () {
+        worker.postMessage(100000);
+    };
+
+/*
+Web Worker
+- Web Worker adalah kemampuan untuk menjalankan proses di Thread yang berbeda dibanding Main Thread
+- Keuntungan menggunakan Web Worker adalah:
+  jika terdapat proses yang membutuhkan waktu lama,
+  Web tidak akan Freeze karena proses tersebut dijalankan di Thread berbeda dari Main Thread (yang biasa digunakan oleh UI)
+- https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API
+*/
+
+</script>
+</body>
+</html>
